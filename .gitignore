@@ -1,1 +1,4 @@
 .aidlc-lite
+node_modules/
+dist/
+*.log
