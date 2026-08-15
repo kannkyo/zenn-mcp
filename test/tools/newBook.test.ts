@@ -58,7 +58,7 @@ describe("zennNewBookHandler", () => {
       });
       expect(spawn).toHaveBeenCalledWith(
         "npx",
-        ["zenn", "new:book", "--slug", "my-book"],
+        ["--yes", "-p", "zenn-cli", "zenn", "new:book", "--slug", "my-book"],
         { cwd: dir }
       );
     } finally {

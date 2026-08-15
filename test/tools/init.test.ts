@@ -48,9 +48,13 @@ describe("zennInitHandler", () => {
       expect(result).toEqual({
         content: [{ type: "text", text: "initialized\n" }],
       });
-      expect(spawn).toHaveBeenCalledWith("npx", ["zenn", "init"], {
-        cwd: dir,
-      });
+      expect(spawn).toHaveBeenCalledWith(
+        "npx",
+        ["--yes", "-p", "zenn-cli", "zenn", "init"],
+        {
+          cwd: dir,
+        }
+      );
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }

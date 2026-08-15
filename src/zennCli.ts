@@ -32,7 +32,9 @@ export function runZennCommand(
   args: string[]
 ): Promise<RunZennResult> {
   return new Promise((resolve, reject) => {
-    const child = spawn("npx", ["zenn", ...args], { cwd: projectDir });
+    const child = spawn("npx", ["--yes", "-p", "zenn-cli", "zenn", ...args], {
+      cwd: projectDir,
+    });
     let stdout = "";
     let stderr = "";
 

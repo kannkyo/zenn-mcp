@@ -60,6 +60,9 @@ describe("zennNewArticleHandler", () => {
       expect(spawn).toHaveBeenCalledWith(
         "npx",
         [
+          "--yes",
+          "-p",
+          "zenn-cli",
           "zenn",
           "new:article",
           "--slug",

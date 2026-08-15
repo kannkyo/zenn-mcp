@@ -92,9 +92,13 @@ describe("runZennCommand", () => {
       stderr: "",
       exitCode: 0,
     });
-    expect(spawn).toHaveBeenCalledWith("npx", ["zenn", "list:articles"], {
-      cwd: "/tmp/project",
-    });
+    expect(spawn).toHaveBeenCalledWith(
+      "npx",
+      ["--yes", "-p", "zenn-cli", "zenn", "list:articles"],
+      {
+        cwd: "/tmp/project",
+      }
+    );
   });
 
   it("resolves with stderr and non-zero exitCode on failure", async () => {

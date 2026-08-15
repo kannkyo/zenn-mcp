@@ -52,9 +52,13 @@ describe("zennListArticlesHandler", () => {
       expect(result).toEqual({
         content: [{ type: "text", text: "slug1\nslug2\n" }],
       });
-      expect(spawn).toHaveBeenCalledWith("npx", ["zenn", "list:articles"], {
-        cwd: dir,
-      });
+      expect(spawn).toHaveBeenCalledWith(
+        "npx",
+        ["--yes", "-p", "zenn-cli", "zenn", "list:articles"],
+        {
+          cwd: dir,
+        }
+      );
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }
