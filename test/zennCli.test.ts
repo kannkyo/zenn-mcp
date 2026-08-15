@@ -92,8 +92,9 @@ describe("runZennCommand", () => {
       stderr: "",
       exitCode: 0,
     });
+    const expectedNpxBin = process.platform === "win32" ? "npx.cmd" : "npx";
     expect(spawn).toHaveBeenCalledWith(
-      "npx",
+      expectedNpxBin,
       ["--yes", "-p", "zenn-cli", "zenn", "list:articles"],
       {
         cwd: "/tmp/project",
@@ -159,11 +160,16 @@ describe("buildNewArticleArgs", () => {
       "--emoji",
       "😸",
       "--published",
+      "true",
     ]);
   });
 
-  it("omits --published when published is false", () => {
-    expect(buildNewArticleArgs({ published: false })).toEqual(["new:article"]);
+  it("passes --published false explicitly when published is false", () => {
+    expect(buildNewArticleArgs({ published: false })).toEqual([
+      "new:article",
+      "--published",
+      "false",
+    ]);
   });
 });
 
@@ -206,6 +212,18 @@ describe("formatZennResult", () => {
     ).toEqual({
       content: [{ type: "text", text: "partial" }],
       isError: true,
+    });
+  });
+
+  it("includes stderr alongside stdout when exitCode is 0 but stderr is non-empty", () => {
+    expect(
+      formatZennResult({
+        stdout: "created\n",
+        stderr: "warning: something\n",
+        exitCode: 0,
+      })
+    ).toEqual({
+      content: [{ type: "text", text: "created\n\nwarning: something\n" }],
     });
   });
 });

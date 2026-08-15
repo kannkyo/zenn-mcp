@@ -32,7 +32,8 @@ export function runZennCommand(
   args: string[]
 ): Promise<RunZennResult> {
   return new Promise((resolve, reject) => {
-    const child = spawn("npx", ["--yes", "-p", "zenn-cli", "zenn", ...args], {
+    const npxBin = process.platform === "win32" ? "npx.cmd" : "npx";
+    const child = spawn(npxBin, ["--yes", "-p", "zenn-cli", "zenn", ...args], {
       cwd: projectDir,
     });
     let stdout = "";
@@ -67,7 +68,8 @@ export function buildNewArticleArgs(options: NewArticleOptions): string[] {
   if (options.title) args.push("--title", options.title);
   if (options.type) args.push("--type", options.type);
   if (options.emoji) args.push("--emoji", options.emoji);
-  if (options.published) args.push("--published");
+  if (options.published !== undefined)
+    args.push("--published", options.published ? "true" : "false");
   return args;
 }
 
@@ -102,8 +104,11 @@ export function formatZennResult(result: RunZennResult): ToolResult {
       isError: true,
     };
   }
+  const text = [result.stdout, result.stderr]
+    .filter((s) => s.length > 0)
+    .join("\n");
   return {
-    content: [{ type: "text", text: result.stdout || "(no output)" }],
+    content: [{ type: "text", text: text || "(no output)" }],
   };
 }
 
