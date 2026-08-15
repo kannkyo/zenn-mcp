@@ -80,6 +80,7 @@ export function buildNewBookArgs(options: NewBookOptions): string[] {
 }
 
 export interface ToolResult {
+  [key: string]: unknown;
   content: { type: "text"; text: string }[];
   isError?: boolean;
 }
