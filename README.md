@@ -27,8 +27,11 @@ npm run build
 {
   "mcpServers": {
     "zenn-mcp": {
-      "command": "node",
-      "args": ["/path/to/zenn-mcp/dist/index.js"]
+      "command": "npx",
+      "args": [
+        "-y",
+        "github:kannkyo/zenn-mcp"
+      ]
     }
   }
 }
